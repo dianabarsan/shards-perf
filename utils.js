@@ -1,7 +1,7 @@
 const path = require('path');
 
 const request = async ({ uri, body={}, method='GET' }) => {
-  const url = path.join('http://localhost:5984', uri);
+  const url = path.join('http://localhost:5988', uri);
   const headers = new Headers({
     'accept': 'application/json',
     'content-type': 'application/json',
