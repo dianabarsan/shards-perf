@@ -1,6 +1,6 @@
 services:
   couchdb:
-    image: ${COUCH_IMAGE}
+    image: couch:latest
     volumes:
       - ${COUCHDB_DATA:-./data}:/opt/couchdb/data
       - cht-credentials:/opt/couchdb/etc/local.d/
