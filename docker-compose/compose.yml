@@ -1,6 +1,6 @@
 services:
   couchdb:
-    image: sha256:d3a7418467d37f77ad8169c2c56c8a331773842a610f68246fcd165f5b346d7b
+    image: ${COUCH_IMAGE}
     volumes:
       - ${COUCHDB_DATA:-./data}:/opt/couchdb/data
       - cht-credentials:/opt/couchdb/etc/local.d/
