@@ -5,7 +5,7 @@ PouchDB.plugin(require('pouchdb-adapter-memory'));
 
 const remoteDb = new PouchDB(`http://localhost:5988/medic`, {
   skip_setup: true,
-  auth: { username: user, password: 'medic.123' }
+  auth: { username: user, password }
 });
 const localDb = new PouchDB(`scalability-test`, {
   adapter: 'memory',
@@ -40,7 +40,7 @@ const completeInitialReplication = async (localDb) => {
   replicationLog.complete = true;
   replicationLog.duration =  Date.now() - replicationLog.start_time;
 
-  console.info('Initial sync completed successfully in ' + (replicationLog.duration / 1000) + ' seconds');
+  console.info(replicationLog.duration / 1000);
   await localDb.put(replicationLog);
 };
 
@@ -112,9 +112,5 @@ const getReplicationLog = async (localDb) => {
   }
 };
 
-(async() => {
-  const startTime = performance.now();
-  await replicate(remoteDb, localDb);
-  console.log(performance.now() - startTime);
-})();
+replicate(remoteDb, localDb);
 

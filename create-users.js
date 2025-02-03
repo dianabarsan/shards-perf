@@ -1,7 +1,7 @@
 const { request, password } = require('./utils');
 
 const getUserSettings = async () => {
-  const rows = await request({ uri: '/medic/_design/medic-client/_view/doc_by_type?key=%5B"user-settings"%5D&include_docs=true' });
+  const rows = await request({ uri: '/medic/_design/medic-client/_view/doc_by_type?key=%5B"user-settings"%5D&include_docs=true&limit=100' });
   return rows.rows.map((row) => row.doc);
 }
 

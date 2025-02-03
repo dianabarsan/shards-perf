@@ -5,7 +5,7 @@ const fs = require('fs');
 const NBR = 2;
 
 const getUsers = async () => {
-  const users = await request({ uri: `_users/_all_docs?limit=${NBR}` });
+  const users = await request({ uri: `_users/_all_docs?limit=${NBR}&start_key="org.couchdb.user"` });
   return users.rows.map((row) => row.id.replace('org.couchdb.user:', ''));
 };
 
