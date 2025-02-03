@@ -1,11 +1,12 @@
 const path = require('path');
 
-const request = async ({ uri, body={}, method='GET' }) => {
+const request = async ({ uri, body={}, method='GET', auth }) => {
+  auth = auth || 'admin:pass';
   const url = path.join('http://localhost:5988', uri);
   const headers = new Headers({
     'accept': 'application/json',
     'content-type': 'application/json',
-    'authorization': `Basic ${btoa('admin:pass')}`,
+    'authorization': `Basic ${btoa(auth)}`,
   });
 
   const opts = { headers, method };
@@ -26,5 +27,6 @@ const request = async ({ uri, body={}, method='GET' }) => {
 };
 
 module.exports = {
-  request
+  request,
+  password: 'medic.123',
 };

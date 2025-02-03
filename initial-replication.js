@@ -1,11 +1,11 @@
-const user = process.argv[1];
+const user = process.argv[2];
 const PouchDB = require('pouchdb');
-const { request } = require('./utils');
+const { request, password } = require('./utils');
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 
 const remoteDb = new PouchDB(`http://localhost:5988/medic`, {
   skip_setup: true,
-  auth: { username: user, password: 'pass' }
+  auth: { username: user, password: 'medic.123' }
 });
 const localDb = new PouchDB(`scalability-test`, {
   adapter: 'memory',
@@ -50,7 +50,7 @@ const getMissingDocIdsRevsPairs = async (localDb, remoteDocIdsRevs) => {
 };
 
 const getDownloadList = async (localDb = true) => {
-  const response = await request({ uri: '/api/v1/replication/get-ids' });
+  const response = await request({ uri: '/api/v1/replication/get-ids', auth: `${user}:${password}` });
 
   docIdsRevs = await getMissingDocIdsRevsPairs(localDb, response.doc_ids_revs);
   remoteDocCount = response.doc_ids_revs.length;

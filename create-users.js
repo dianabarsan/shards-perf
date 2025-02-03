@@ -1,4 +1,4 @@
-const { request } = require('./utils');
+const { request, password } = require('./utils');
 
 const getUserSettings = async () => {
   const rows = await request({ uri: '/medic/_design/medic-client/_view/doc_by_type?key=%5B"user-settings"%5D&include_docs=true' });
@@ -14,7 +14,7 @@ const createUsers = async () => {
     roles: userSettings.roles,
     facility_id: userSettings.facility_id,
     contact_id: userSettings.contact_id,
-    password: 'pass',
+    password: password,
   }));
 
   await request({ uri: '_users/_bulk_docs', body: { docs: users }, method: 'POST' });
