@@ -6,7 +6,7 @@ git clone https://github.com/dianabarsan/no-ulimit-couch.git &&
 cd no-ulimit-couch/couchdb/ &&
 sudo docker build -t couch:latest . &&
 
-cd ../ &&
+cd ../../ &&
 git clone https://github.com/dianabarsan/shards-perf.git &&
 cd shards-perf &&
 npm ci &&
@@ -22,9 +22,7 @@ git clone https://github.com/medic/test-data-generator.git &&
 cd test-data-generator &&
 npm ci &&
 npm install luxon &&
-nano design.js
-
-
+mv ../shards-perf/design.js ./design.js &&
 export COUCH_URL=http://admin:pass@localhost:5988/medic && npm run generate ./design.js
 
 curl http://admin:pass@localhost:5984/_active_tasks | jq
