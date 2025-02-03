@@ -1,0 +1,45 @@
+services:
+  couchdb:
+    image: sha256:d3a7418467d37f77ad8169c2c56c8a331773842a610f68246fcd165f5b346d7b
+    volumes:
+      - ${COUCHDB_DATA:-./data}:/opt/couchdb/data
+      - cht-credentials:/opt/couchdb/etc/local.d/
+    environment:
+      - "COUCHDB_USER=${COUCHDB_USER:-admin}"
+      - "COUCHDB_PASSWORD=${COUCHDB_PASSWORD:-pass}"
+      - "COUCHDB_SECRET=${COUCHDB_SECRET}"
+      - "COUCHDB_UUID=${COUCHDB_UUID}"
+      - "SVC_NAME=${SVC_NAME:-couchdb}"
+      - "COUCHDB_LOG_LEVEL=${COUCHDB_LOG_LEVEL:-info}"
+    restart: always
+    networks:
+      - cht-net
+    ports:
+      - "5984:5984"
+
+  api:
+    image: public.ecr.aws/medic/cht-api:4.16.0
+    restart: always
+    expose:
+      - "${API_PORT:-5988}"
+    environment:
+      - COUCH_URL=http://${COUCHDB_USER:-admin}:${COUCHDB_PASSWORD:-pass}@couchdb:5984/medic
+      - BUILDS_URL=${MARKET_URL_READ:-https://staging.dev.medicmobile.org}/${BUILDS_SERVER:-_couch/builds_4}
+      - UPGRADE_SERVICE_URL=${UPGRADE_SERVICE_URL:-http://localhost:5100}
+    logging:
+      driver: "local"
+      options:
+        max-size: "${LOG_MAX_SIZE:-50m}"
+        max-file: "${LOG_MAX_FILES:-20}"
+    networks:
+      - cht-net
+    ports:
+      - "5988:5988"
+
+networks:
+  cht-net:
+    name: ${CHT_NETWORK:-cht-net}
+
+volumes:
+  cht-credentials:
+  cht-ssl:
