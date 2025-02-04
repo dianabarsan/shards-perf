@@ -13,10 +13,10 @@ npm ci &&
 
 cd docker-compose && export COUCH_IMAGE=couch:latest && sudo docker-compose up
 
-curl -X PUT http://admin:pass@localhost:5984/medic &&
-export COUCH_URL=http://admin:pass@localhost:5984/medic &&
-curl https://staging.dev.medicmobile.org/_couch/builds_4/medic%3Amedic%3A4.15.0/ddocs%2Fmedic.json > medic.json &&
-curl -X POST $COUCH_URL/_bulk_docs -d @medic.json -H "Content-Type: application/json" &&
+#curl -X PUT http://admin:pass@localhost:5984/medic &&
+#export COUCH_URL=http://admin:pass@localhost:5984/medic &&
+#curl https://staging.dev.medicmobile.org/_couch/builds_4/medic%3Amedic%3A4.15.0/ddocs%2Fmedic.json > medic.json &&
+#curl -X POST $COUCH_URL/_bulk_docs -d @medic.json -H "Content-Type: application/json" &&
 
 git clone https://github.com/medic/test-data-generator.git &&
 cd test-data-generator &&
@@ -26,12 +26,12 @@ mv ../shards-perf/design.js ./design.js &&
 export COUCH_URL=http://admin:pass@localhost:5988/medic && npm run generate ./design.js
 
 cd ../shards-perf && node create-users.js
+node index.js
+node replication-scalability.js
 
 curl http://admin:pass@localhost:5984/_active_tasks | jq
 
-curl -X DELETE http://admin:pass@localhost:5984/medic &&
+curl -X DELETE http://admin:pass@localhost:5984/medic && curl -X DELETE http://admin:pass@localhost:5984/_users &&
 curl -X PUT http://admin:pass@localhost:5984/_node/couchdb@127.0.0.1/_config/cluster/q --data-raw '"24"' &&
-curl -X PUT http://admin:pass@localhost:5984/medic
-
-npm install pouchdb pouchdb-adapter-memory
+curl -X PUT http://admin:pass@localhost:5984/medic && curl -X PUT http://admin:pass@localhost:5984/_users
 
