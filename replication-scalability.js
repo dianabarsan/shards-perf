@@ -18,7 +18,7 @@ const replicateUser = (user) => {
       if (stderr) {
         return reject(`exec error: ${stderr}`);
       }
-      resolve(stdout);
+      resolve(parseInt(stdout));
     });
   });
 };
@@ -27,4 +27,5 @@ const replicateUser = (user) => {
   const users = await getUsers();
   const times = await Promise.all(users.map(user => replicateUser(user)));
   fs.writeFileSync('./times.json', JSON.stringify(times));
+  console.warn(times.reduce((a, s) => a + s, 0) / times.length);
 })();

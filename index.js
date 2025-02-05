@@ -1,6 +1,6 @@
 const { request } = require('./utils');
 
-const dbName = 'medic';
+const dbName = process.argv[2] || 'medic';
 
 const queryView = async (ddocName) => {
   try {
