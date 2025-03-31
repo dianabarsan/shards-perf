@@ -16,6 +16,10 @@ services:
       - cht-net
     ports:
       - "5984:5984"
+    deploy:
+      resources:
+        limits:
+          cpus: '24'
 
   api:
     image: public.ecr.aws/medic/cht-api:4.16.0

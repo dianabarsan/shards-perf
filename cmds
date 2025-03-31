@@ -1,4 +1,17 @@
-1
+sudo yum install git nodejs docker nano &&
+sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose &&
+sudo chmod +x /usr/local/bin/docker-compose &&
+sudo systemctl start docker &&
+git clone https://github.com/dianabarsan/no-ulimit-couch.git &&
+cd no-ulimit-couch/couchdb/ &&
+sudo docker build -t couch:latest . &&
+
+cd ../../ &&
+git clone https://github.com/dianabarsan/shards-perf.git &&
+cd shards-perf &&
+npm ci &&
+
+cd docker-compose && export COUCH_IMAGE=couch:latest && sudo docker-compose up
 
 #curl -X PUT http://admin:pass@localhost:5984/medic &&
 #export COUCH_URL=http://admin:pass@localhost:5984/medic &&
@@ -7,6 +20,7 @@
 
 git clone https://github.com/medic/test-data-generator.git &&
 cd test-data-generator &&
+git checkout batch-docs-saving &&
 npm ci &&
 npm install luxon &&
 mv ../shards-perf/design.js ./design.js &&
