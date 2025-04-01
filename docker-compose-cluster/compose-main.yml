@@ -24,7 +24,7 @@ services:
     expose:
       - "${API_PORT:-5988}"
     environment:
-      - COUCH_URL=http://${COUCHDB_USER:-admin}:${COUCHDB_PASSWORD:-pass}@couchdb:5984/medic
+      - COUCH_URL=http://${COUCHDB_USER:-admin}:${COUCHDB_PASSWORD:-pass}@couchdb-1.local:5984/medic
       - BUILDS_URL=${MARKET_URL_READ:-https://staging.dev.medicmobile.org}/${BUILDS_SERVER:-_couch/builds_4}
       - UPGRADE_SERVICE_URL=${UPGRADE_SERVICE_URL:-http://localhost:5100}
     logging:
