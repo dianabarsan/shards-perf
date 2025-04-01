@@ -10,4 +10,4 @@ const remoteDb2 = new PouchDB(`http://localhost:5988/${db2}`, {
   auth: { username: 'admin', password: 'pass' },
 });
 
-remoteDb1.replicate.to(remoteDb2);
+remoteDb1.replicate.to(remoteDb2, { batch_size: 1000 });
