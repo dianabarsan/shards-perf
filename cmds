@@ -49,6 +49,9 @@ sudo docker swarm join ...
 
 docker network create --driver overlay --attachable cht-net
 
+curl -X PUT http://admin:pass@localhost:5984/_node/couchdb@couchdb-1.local/_config/cluster/q --data-raw '"24"' &&
+curl -X PUT http://admin:pass@localhost:5984/_node/couchdb@couchdb-2.local/_config/cluster/q --data-raw '"24"' &&
+curl -X PUT http://admin:pass@localhost:5984/_node/couchdb@couchdb-3.local/_config/cluster/q --data-raw '"24"'
 
 
 
