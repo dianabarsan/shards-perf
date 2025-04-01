@@ -37,8 +37,19 @@ curl -X PUT http://admin:pass@localhost:5984/_node/couchdb@127.0.0.1/_config/clu
 curl -X PUT http://admin:pass@localhost:5984/medic && curl -X PUT http://admin:pass@localhost:5984/_users
 
 # CLUSTER
-sudo docker swarm init --advertise-addr <MANAGER-IP>
+
+# inbound rules
+# Custom TCP 2377
+# Custom TCP 7946
+# Custom UDP 7946
+# Custom UDP 4789
+
+sudo docker swarm init
 sudo docker swarm join ...
+
+docker network create --driver overlay --attachable cht-net
+
+
 
 
 
