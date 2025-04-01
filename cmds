@@ -11,7 +11,7 @@ git clone https://github.com/dianabarsan/shards-perf.git &&
 cd shards-perf &&
 npm ci &&
 
-cd docker-compose && export COUCH_IMAGE=couch:latest && sudo docker-compose up
+cd docker-compose && sudo docker-compose up
 
 #curl -X PUT http://admin:pass@localhost:5984/medic &&
 #export COUCH_URL=http://admin:pass@localhost:5984/medic &&
@@ -35,4 +35,11 @@ curl http://admin:pass@localhost:5984/_active_tasks | jq
 curl -X DELETE http://admin:pass@localhost:5984/medic && curl -X DELETE http://admin:pass@localhost:5984/_users &&
 curl -X PUT http://admin:pass@localhost:5984/_node/couchdb@127.0.0.1/_config/cluster/q --data-raw '"24"' &&
 curl -X PUT http://admin:pass@localhost:5984/medic && curl -X PUT http://admin:pass@localhost:5984/_users
+
+# CLUSTER
+sudo docker swarm init --advertise-addr <MANAGER-IP>
+sudo docker swarm join ...
+
+
+
 
