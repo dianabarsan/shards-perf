@@ -2,7 +2,8 @@ const { exec } = require('child_process');
 const { request } = require('./utils');
 const fs = require('fs');
 
-const NBR = 100;
+const [,, nbrConcurrentUsers ] = process.argv;
+const NBR = nbrConcurrentUsers || 100;
 
 const getUsers = async () => {
   const users = await request({ uri: `_users/_all_docs?limit=${NBR}&start_key="org.couchdb.user:u"` });
