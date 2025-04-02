@@ -39,6 +39,7 @@ services:
       - cht-net
     ports:
       - "5988:5988"
+      - "80:5988"
 
 networks:
   cht-net:
